@@ -1,0 +1,1 @@
+source c:/Users/HP.DESKTOP-NBQQ032/Desktop/Django_Social_Media_Project/env/Scripts/activate
