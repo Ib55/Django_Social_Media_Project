@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block body %}
+<div class='w-50 m-auto my-5 border border-info p-5 rounded'>
+    <h4 class='text-center border-bottom my-4 text-warning border-info'>Update Your Informations</h4>
+    <form method='POST' enctype='multipart/form-data'>
+        {{form|crispy}}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary my-3">Update</button>
+    </form>
+        
+</div>
+{% endblock body %}

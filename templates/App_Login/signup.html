@@ -5,9 +5,22 @@
 
 
 {% block body %}
-<form method='POST'>
-{{form|crispy}}
-{% csrf_token %}
-<button type='submit' class='btn btn-info'>Submit</button>
-</form>
+<h3 class='text-center my-3 text-info fw-bold'>Sign Up</h3>
+
+<div class='w-50 m-auto my-5 border border-info p-5'>
+    {% if registered %}
+    <div class="alert alert-success" role="alert">
+    Account Create Successfully<a href='{% url 'App_Login:login' %}'>Login Here</a>
+    </div>
+{% else %}
+    <form method='POST'>
+        {{form|crispy}}
+        {% csrf_token %}
+        <button type='submit' class='btn btn-info mt-3'>Submit</button>
+    </form>
+    <div class='border p-3 border-info mt-5'>
+        <p>You have an account?  <a href='{% url 'App_Login:login' %}'>Login Here</a></p>
+    </div>   
+</div>
+{% endif %}
 {% endblock body %}

@@ -4,9 +4,16 @@
 {% block title %}{{title}}{% endblock title %}
 
 {% block body %}
-<form method='POST'>
-{{form|crispy}}
-{% csrf_token %}
-<button type='submit' class='btn btn-info'>Login</button>
-</form>
+<h3 class='text-center my-3 text-info fw-bold'>Login Here</h3>
+<div class='w-25 m-auto my-5 border border-info p-5'>
+    <form method='POST'>
+        {{form|crispy}}
+        {% csrf_token %}
+        <button type='submit' class='btn btn-info my-3'>Login</button>
+    </form>
+    <div class='border p-3 border-info'>
+        <p>Don't have an account?  <a href='{% url 'App_Login:signup' %}'>Sign Up</a></p>
+    </div>
+        
+</div>
 {% endblock body %}

@@ -1,4 +1,46 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Bismilla</h1>
+<style>
+    .img{
+        width: 200px;
+        height: 150px;
+        border: 1px solid #000;
+        margin: 10px 0;
+    }
+    .fill {
+        object-fit: cover;
+      }
+</style>
+<div class='container'>
+    <div class="row">
+        {% if search %}
+        {% for user in result %}
+        <div class="col-md-2">
+            {% if user.user_profile.profile_pic %}
+            <img src='/media/{{user.user_profile.profile_pic}}' width='75px' height='75px' class='rounded-circle'>
+            {% else %}
+            <img src='/media/default/p.png' width='75px' height='75px' class='rounded-circle'>
+
+            {% endif %}
+        </div>
+        <div class="col-md-10">
+            <p>{{user.user_profile.full_name}}</p>
+            <a href='{% url 'App_Login:other-user' username=user.username %}'>{{user.username}}</a>
+        </div>
+        {% endfor %}
+        {% endif %}
+       
+    </div>
+<div class="row">
+   {% for post in user.post.all %}
+   <div class='col-md-3'>
+    <p>{{post.caption}}</p>
+    <div class='im'>
+        <img src="/media/{{post.post_img}}" class="img fill" alt="">
+    </div>
+   </div>
+   {% endfor %}
+</div>
+</div>
+
 {% endblock body %}

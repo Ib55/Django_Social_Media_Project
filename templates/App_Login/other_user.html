@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}{{other_user.user_profile.full_name}}(@{{other_user.username}}){% endblock title %}
+
+
+{% block body %}
+<div class='container'>
+    <div class='row w-75 m-auto my-5 d-flex justify-content-between'>
+        <h3 class='text-center border-top border-bottom p-2 border-info my-5 text-info'>Profile</h3>
+        <div class='col-sm-12 col-md-6 col-lg-4'>
+            {% if other_user.user_profile.profile_pic %}
+            <div class='mt-5'><img src="/media/{{other_user.user_profile.profile_pic}}" class="img fill" alt="..."></div>
+            {% else %}
+            <div><img src="/media/default/p.png" class="img-fluid rounded-circle" alt="..."></div>
+            {% endif %}
+        </div>
+        <div class='col-sm-12 col-md-6 col-lg-8'>
+            <div class='d-flex justify-content-around'>
+               <h6>Posts : {{other_user.post.count}}</h6>
+               <h6>Follower : {{other_user.follower.count}}</h6>
+               <h6>Following : {{other_user.following.count}}</h6>
+            </div>
+            <div class="card w-100 my-5 text-center">
+                <div class="card-header">
+                    {{other_user.user_profile.full_name}}
+                  </div>
+                <div class="card-body">
+                  <h5 class="card-title">@{{other_user.username}}</h5>
+                  {% if not already_followed %}
+                  <a class='btn btn-primary' href='{% url 'App_Login:follow' other_user.username %}'>Follow</a>
+                  {% else %}
+                  <a class='btn btn-primary' href='{% url 'App_Login:unfollow' other_user.username %}'>UnFollow</a>
+                  {% endif %}
+                  <p class="card-text">{{other_user.user_profile.description|linebreaks}}</p>
+                  <p class="card-text">{{other_user.user_profile.dob}}</p>
+                  <p class="card-text">Website : <a href="{{other_user.user_profile.website}}">{{other_user.user_profile.website}}</a></p>
+                  <p class="card-text">Facebook : <a href="{{other_user.user_profile.facebook}}">{{other_user.user_profile.facebook}}</a></p>
+
+                </div>
+              </div>
+            
+            
+            
+        </div>
+    </div>
+   
+   
+</div>
+
+<style>
+  .img{
+      width: 300px;
+      height: 200px;
+      border: 1px solid #000;
+      margin: 10px 0;
+  }
+  .fill {
+      object-fit: cover;
+      object-position: 50% 50%;
+      image-resolution: from 300dpi;
+       
+    }
+</style>
+<div class='container'>
+<div class="row">
+ {% for post in other_user.post.all %}
+ <div class='col-md-3'>
+  <p>{{post.caption}}</p>
+  <div class='im'>
+      <img src="/media/{{post.post_img}}" class="img fill" alt="">
+  </div>
+ </div>
+ {% endfor %}
+</div>
+</div>
+
+{% endblock body %}
