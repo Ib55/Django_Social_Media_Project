@@ -2,13 +2,18 @@
 {% block body %}
 <style>
     .img{
-        width: 200px;
-        height: 150px;
+        width: 800px;
+        height: 400px;
         border: 1px solid #000;
         margin: 10px 0;
     }
     .fill {
         object-fit: cover;
+      }
+      .pic{
+        width:50px;
+        height:50px;
+        border-radius:50%;
       }
 </style>
 <div class='container'>
@@ -31,15 +36,33 @@
         {% endif %}
        
     </div>
-<div class="row">
-   {% for post in user.post.all %}
-   <div class='col-md-3'>
-    <p>{{post.caption}}</p>
-    <div class='im'>
-        <img src="/media/{{post.post_img}}" class="img fill" alt="">
-    </div>
-   </div>
-   {% endfor %}
+<div class="row w-70 m-auto">
+    {% for post_other in posts %}
+    <div class='col-md-12 border py-5 px-5'>
+        {% if post_other.author.user_profile.profile_pic %}
+        <div>
+            <img src='/media/{{post_other.author.user_profile.profile_pic}}' class='pic'>
+            <a href='{% url 'App_Login:other-user' username=post_other.author %}'>{{post_other.author}}</a>
+        </div>
+        {% else %}
+           <div><img src='/media/default/p.png' class='pic'><a href='{% url 'App_Login:other-user' username=post_other.author %}'>{{post_other.author}}</a></div>
+           
+        {% endif %}
+        
+         
+        <p>{{post_other.caption}}</p>
+        <p>{{post_other.upload_date}}</p>
+        <div class='im'>
+            <img src="/media/{{post_other.post_img}}" class="img fill" alt="">
+            {% if post_other.pk in liked_post_list %}
+            <a href='{% url 'App_Post:unlike' pk=post_other.pk %}'><i class="fa fa-heart" style="font-size:36px"></i></a>
+            {% else %}
+            <a href='{% url 'App_Post:like' pk=post_other.pk %}'><i class="fa fa-heart-o" style="font-size:36px"></i></a>
+            {% endif %}
+            {{post_other.like_post.count}}
+        </div>
+       </div>
+    {% endfor %}
 </div>
 </div>
 
